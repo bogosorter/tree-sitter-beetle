@@ -12,6 +12,23 @@ export default grammar({
 
   rules: {
     // TODO: add the actual grammar rules
-    source_file: $ => "hello"
+    source_file: $ => $.expression,
+    expression: $ => choice(
+      prec.left(2, seq($.expression, '+', $.expression)),
+      prec.left(2, seq($.expression, '-', $.expression)),
+      prec(1, $.symbol),
+      prec(1, $.integer),
+      prec(1, $.boolean)
+    ),
+
+    symbol: $ => new RustRegex('(?i)[a-z]+'),
+    integer: $ => choice(
+      '0',
+      new RustRegex('[1-9][0-9]*')
+    ),
+    boolean: $ => choice(
+      'true',
+      'false'
+    )
   }
 });
