@@ -12,13 +12,42 @@ export default grammar({
 
   rules: {
     // TODO: add the actual grammar rules
-    source_file: $ => $.expression,
+    source_file: $ => seq($.returnExpression, ';'),
+
+    returnExpression: $ => choice(
+      seq($.assignment, ';', $.returnExpression),
+      seq('if', $.expression, ':', $.returnExpression, ';', $.returnExpression),
+      seq('return', $.expression)
+    ),
+
+    assignment: $ => choice(
+      seq($.symbol, $.function),
+      seq($.symbol, '=', $.expression)
+    ),
+
     expression: $ => choice(
+      prec(3, seq($.symbol, optional($.expressionCall))),
+      prec(3, seq('(', $.expression, ')', $.expressionCall)),
+      prec(3, $.integer),
+      prec(3, $.boolean),
       prec.left(2, seq($.expression, '+', $.expression)),
       prec.left(2, seq($.expression, '-', $.expression)),
-      prec(1, $.symbol),
-      prec(1, $.integer),
-      prec(1, $.boolean)
+      prec.left(1, seq($.expression, '==', $.expression)),
+      prec.left(1, seq($.expression, '<', $.expression)),
+      prec.left(1, seq($.expression, '>', $.expression)),
+      prec.left(1, seq($.expression, '<=', $.expression)),
+      prec.left(1, seq($.expression, '>=', $.expression))
+    ),
+    expressionCall: $ => seq('(', $.expression, repeat(seq(',', $.expression)), ')', optional($.expressionCall)),
+
+    function: $ => seq('(', $.symbol, ':', $.type, repeat(seq(',', $.symbol, ':', $.type)), ')', ':', $.type, '=', $.returnExpression),
+    lambda: $ => seq('(', $.symbol, ':', $.type, repeat(seq(',', $.symbol, ':', $.type)), ')', ':', $.type, '=', $.expression),
+
+    type: $ => choice(
+      'integer',
+      'boolean',
+      seq('(', $.type, ')'),
+      prec.right(seq($.type, '->', $.type))
     ),
 
     symbol: $ => new RustRegex('(?i)[a-z]+'),
