@@ -86,8 +86,12 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "symbol"
+              "type": "FIELD",
+              "name": "assignee",
+              "content": {
+                "type": "SYMBOL",
+                "name": "symbol"
+              }
             },
             {
               "type": "SYMBOL",
@@ -99,8 +103,12 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "symbol"
+              "type": "FIELD",
+              "name": "assignee",
+              "content": {
+                "type": "SYMBOL",
+                "name": "symbol"
+              }
             },
             {
               "type": "STRING",

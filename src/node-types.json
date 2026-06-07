@@ -2,9 +2,20 @@
   {
     "type": "assignment",
     "named": true,
-    "fields": {},
+    "fields": {
+      "assignee": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "symbol",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
@@ -13,10 +24,6 @@
         },
         {
           "type": "function",
-          "named": true
-        },
-        {
-          "type": "symbol",
           "named": true
         }
       ]

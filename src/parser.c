@@ -13,10 +13,10 @@
 #define ALIAS_COUNT 0
 #define TOKEN_COUNT 24
 #define EXTERNAL_TOKEN_COUNT 0
-#define FIELD_COUNT 0
+#define FIELD_COUNT 1
 #define MAX_ALIAS_SEQUENCE_LENGTH 10
 #define MAX_RESERVED_WORD_SET_SIZE 0
-#define PRODUCTION_ID_COUNT 1
+#define PRODUCTION_ID_COUNT 2
 #define SUPERTYPE_COUNT 0
 
 enum ts_symbol_identifiers {
@@ -273,6 +273,24 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .visible = false,
     .named = false,
   },
+};
+
+enum ts_field_identifiers {
+  field_assignee = 1,
+};
+
+static const char * const ts_field_names[] = {
+  [0] = NULL,
+  [field_assignee] = "assignee",
+};
+
+static const TSMapSlice ts_field_map_slices[PRODUCTION_ID_COUNT] = {
+  [1] = {.index = 0, .length = 1},
+};
+
+static const TSFieldMapEntry ts_field_map_entries[] = {
+  [0] =
+    {field_assignee, 0},
 };
 
 static const TSSymbol ts_alias_sequences[PRODUCTION_ID_COUNT][MAX_ALIAS_SEQUENCE_LENGTH] = {
@@ -1658,7 +1676,7 @@ static const TSParseActionEntry ts_parse_actions[] = {
   [63] = {.entry = {.count = 1, .reusable = false}}, SHIFT(6),
   [65] = {.entry = {.count = 1, .reusable = true}}, REDUCE(aux_sym_expressionCall_repeat1, 2, 0, 0),
   [67] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_returnExpression, 2, 0, 0),
-  [69] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_assignment, 3, 0, 0),
+  [69] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_assignment, 3, 0, 1),
   [71] = {.entry = {.count = 1, .reusable = true}}, SHIFT(52),
   [73] = {.entry = {.count = 1, .reusable = true}}, SHIFT(28),
   [75] = {.entry = {.count = 1, .reusable = true}}, SHIFT(34),
@@ -1680,7 +1698,7 @@ static const TSParseActionEntry ts_parse_actions[] = {
   [109] = {.entry = {.count = 1, .reusable = true}}, SHIFT(31),
   [111] = {.entry = {.count = 1, .reusable = true}}, SHIFT(32),
   [113] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_source_file, 2, 0, 0),
-  [115] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_assignment, 2, 0, 0),
+  [115] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_assignment, 2, 0, 1),
   [117] = {.entry = {.count = 1, .reusable = true}}, SHIFT(38),
   [119] = {.entry = {.count = 1, .reusable = true}}, SHIFT(61),
   [121] = {.entry = {.count = 1, .reusable = true}}, SHIFT(29),
@@ -1726,6 +1744,9 @@ TS_PUBLIC const TSLanguage *tree_sitter_beetle(void) {
     .small_parse_table_map = ts_small_parse_table_map,
     .parse_actions = ts_parse_actions,
     .symbol_names = ts_symbol_names,
+    .field_names = ts_field_names,
+    .field_map_slices = ts_field_map_slices,
+    .field_map_entries = ts_field_map_entries,
     .symbol_metadata = ts_symbol_metadata,
     .public_symbol_map = ts_symbol_map,
     .alias_map = ts_non_terminal_alias_map,
