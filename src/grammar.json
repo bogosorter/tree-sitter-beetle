@@ -87,7 +87,7 @@
           "members": [
             {
               "type": "FIELD",
-              "name": "assignee",
+              "name": "functionName",
               "content": {
                 "type": "SYMBOL",
                 "name": "symbol"

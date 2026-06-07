@@ -3,7 +3,7 @@
     "type": "assignment",
     "named": true,
     "fields": {
-      "assignee": {
+      "functionName": {
         "multiple": false,
         "required": false,
         "types": [

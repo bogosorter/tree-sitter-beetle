@@ -21,7 +21,7 @@ export default grammar({
     ),
 
     assignment: $ => choice(
-      seq(field('assignee', $.symbol), $.function),
+      seq(field('functionName', $.symbol), $.function),
       seq($.symbol, '=', $.expression)
     ),
 
