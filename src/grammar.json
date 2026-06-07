@@ -103,12 +103,8 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "FIELD",
-              "name": "assignee",
-              "content": {
-                "type": "SYMBOL",
-                "name": "symbol"
-              }
+              "type": "SYMBOL",
+              "name": "symbol"
             },
             {
               "type": "STRING",
