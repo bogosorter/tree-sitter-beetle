@@ -10,8 +10,12 @@
 export default grammar({
   name: "beetle",
 
+  extras: ($) => [
+    /\s/, // whitespace
+    $.comment,
+  ],
+
   rules: {
-    // TODO: add the actual grammar rules
     source_file: $ => seq($.returnExpression, ';'),
 
     returnExpression: $ => choice(
@@ -58,6 +62,8 @@ export default grammar({
     boolean: $ => choice(
       'true',
       'false'
-    )
+    ),
+
+    comment: $ => token(seq('--', new RustRegex('.*')))
   }
 });
