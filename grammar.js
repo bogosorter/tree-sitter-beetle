@@ -26,7 +26,8 @@ export default grammar({
 
     assignment: $ => choice(
       seq(field('functionName', $.symbol), $.function),
-      seq($.symbol, '=', $.expression)
+      seq($.symbol, '=', $.expression),
+      seq($.typeSymbol, '=', $.type)
     ),
 
     expression: $ => choice(
@@ -50,11 +51,13 @@ export default grammar({
     type: $ => choice(
       'integer',
       'boolean',
+      $.typeSymbol,
       seq('(', $.type, ')'),
       prec.right(seq($.type, '->', $.type))
     ),
 
-    symbol: $ => new RustRegex('(?i)[a-z]+'),
+    symbol: $ => new RustRegex('[a-z][a-zA-Z]*'),
+    typeSymbol: $ => new RustRegex('[A-Z][a-zA-Z]*'),
     integer: $ => choice(
       '0',
       new RustRegex('[1-9][0-9]*')

@@ -115,6 +115,23 @@
               "name": "expression"
             }
           ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "typeSymbol"
+            },
+            {
+              "type": "STRING",
+              "value": "="
+            },
+            {
+              "type": "SYMBOL",
+              "name": "type"
+            }
+          ]
         }
       ]
     },
@@ -523,6 +540,10 @@
           "value": "boolean"
         },
         {
+          "type": "SYMBOL",
+          "name": "typeSymbol"
+        },
+        {
           "type": "SEQ",
           "members": [
             {
@@ -564,7 +585,11 @@
     },
     "symbol": {
       "type": "PATTERN",
-      "value": "(?i)[a-z]+"
+      "value": "[a-z][a-zA-Z]*"
+    },
+    "typeSymbol": {
+      "type": "PATTERN",
+      "value": "[A-Z][a-zA-Z]*"
     },
     "integer": {
       "type": "CHOICE",
